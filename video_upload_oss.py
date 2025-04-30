@@ -7,12 +7,6 @@ import csv
 import oss2
 from pathlib import Path
 
-# OSS配置（需要用户自己填写）
-ACCESS_KEY_ID = 'YOUR_ACCESS_KEY_ID'
-ACCESS_KEY_SECRET = 'YOUR_ACCESS_KEY_SECRET'
-ENDPOINT = 'oss-cn-hangzhou.aliyuncs.com'  # 根据实际情况修改
-BUCKET_NAME = 'your-bucket-name'
-
 # 支持的视频格式
 VIDEO_EXTENSIONS = {'.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv'}
 
@@ -46,11 +40,15 @@ def main():
     parser = argparse.ArgumentParser(description='视频上传OSS工具')
     parser.add_argument('archive', help='压缩文件路径')
     parser.add_argument('-o', '--output', default='video_links.csv', help='CSV输出路径')
+    parser.add_argument('--endpoint', required=True, help='OSS Endpoint')
+    parser.add_argument('--bucket-name', required=True, help='OSS Bucket名称')
+    parser.add_argument('--access-key-id', required=True, help='ACCESS_KEY_ID')
+    parser.add_argument('--access-key-secret', required=True, help='ACCESS_KEY_SECRET')
     args = parser.parse_args()
 
     # 初始化OSS
-    auth = oss2.Auth(ACCESS_KEY_ID, ACCESS_KEY_SECRET)
-    bucket = oss2.Bucket(auth, ENDPOINT, BUCKET_NAME)
+    auth = oss2.Auth(args.access_key_id, args.access_key_secret)
+    bucket = oss2.Bucket(auth, args.endpoint, args.bucket_name)
 
     # 解压文件
     extract_dir = Path(args.archive).stem + '_extracted'
