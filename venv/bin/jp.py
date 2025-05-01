@@ -1,4 +1,4 @@
-#!/Users/anderson/go/src/github.com/alexfaker/video2oss/venv/bin/python3
+#!/Users/yananqi/go/src/github.com/alexfaker/video2oss/venv/bin/python3.13
 
 import sys
 import json
