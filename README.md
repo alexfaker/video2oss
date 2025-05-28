@@ -27,7 +27,4 @@ python video_upload_oss.py /path/to/videos.zip \
   --bucket-name your-bucket-name \
   -o output.csv
 
-
-
-
 ```

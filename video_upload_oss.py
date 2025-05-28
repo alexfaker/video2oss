@@ -11,7 +11,7 @@ import time
 import random
 
 # 支持的视频格式
-VIDEO_EXTENSIONS = {'.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv'}
+VIDEO_EXTENSIONS = {'.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv','.png','.jpg','.jpeg','.gif','.webp'}
 
 def extract_archive(archive_path, extract_dir):
     """解压压缩文件"""
@@ -58,13 +58,13 @@ def generate_random_filename(original_name):
     # 组合成新的文件名
     return f"{timestamp}_{random_num}_{hash_value}{ext}"
 
-def upload_to_oss(file_path, bucket):
+def upload_to_oss(args, file_path, bucket):
     """上传文件到OSS"""
     original_name = os.path.basename(file_path)
     # 生成随机文件名
     object_name = generate_random_filename(original_name)
     bucket.put_object_from_file(object_name, file_path)
-    return f"https://anderson-video.oss-cn-chengdu.aliyuncs.com/{object_name}"
+    return f"https://{args.bucket_name}.{args.endpoint}/{object_name}"
 
 def main():
     parser = argparse.ArgumentParser(description='视频上传OSS工具')
@@ -92,7 +92,7 @@ def main():
         writer.writerow(['视频名称', 'OSS链接'])
         
         for video in video_files:
-            oss_url = upload_to_oss(video, bucket)
+            oss_url = upload_to_oss(args, video, bucket)
             # 获取文件名（不包含扩展名）
             video_name = Path(video.name).stem
             writer.writerow([video_name, oss_url])
