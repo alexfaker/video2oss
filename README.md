@@ -23,11 +23,9 @@ pip install -r requirements.txt
 python video_upload_oss.py /path/to/videos.zip \
   --access-key-id YOUR_ACCESS_KEY_ID \
   --access-key-secret YOUR_ACCESS_KEY_SECRET \
-  --endpoint oss-cn-hangzhou.aliyuncs.com \
+  --endpoint oss-cn-chengdu.aliyuncs.com \
   --bucket-name your-bucket-name \
+  --folder your-folder \
   -o output.csv
-
-
-
 
 ```
