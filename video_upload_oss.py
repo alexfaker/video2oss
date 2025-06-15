@@ -11,7 +11,7 @@ import time
 import random
 
 # 支持的视频格式
-VIDEO_EXTENSIONS = {'.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv'}
+VIDEO_EXTENSIONS = {'.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv','.png','.jpg','.jpeg','.gif','.webp'}
 
 def extract_archive(archive_path, extract_dir):
     """解压压缩文件"""
