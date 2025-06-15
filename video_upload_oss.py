@@ -78,14 +78,14 @@ def generate_random_filename(original_name):
     # 组合成新的文件名
     return f"{timestamp}_{random_num}_{hash_value}{ext}"
 
-def upload_to_oss(file_path, bucket, folder_path=""):
+def upload_to_oss(args, file_path, bucket, folder_path=""):
     """上传文件到OSS"""
     original_name = os.path.basename(file_path)
     # 生成随机文件名
     random_filename = generate_random_filename(original_name)
     object_name = folder_path + random_filename
     bucket.put_object_from_file(object_name, file_path)
-    return f"https://{object_name}.oss-cn-chengdu.aliyuncs.com/{object_name}"
+    return f"https://{args.bucket_name}.{args.endpoint}/{object_name}"
 
 def main():
     parser = argparse.ArgumentParser(description='视频上传OSS工具')
@@ -127,7 +127,7 @@ def main():
         writer.writerow(['视频名称', 'OSS链接'])
         
         for video in video_files:
-            oss_url = upload_to_oss(video, bucket, folder_path)
+            oss_url = upload_to_oss(args, video, bucket, folder_path)
             # 获取文件名（不包含扩展名）
             video_name = Path(video.name).stem
             writer.writerow([video_name, oss_url])
